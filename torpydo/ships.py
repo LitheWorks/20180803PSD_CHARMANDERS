@@ -2,6 +2,7 @@ import random
 from enum import Enum
 from itertools import repeat
 from typing import NamedTuple, Optional
+from termcolor import colored
 
 
 class Orientation(Enum):
@@ -129,6 +130,15 @@ class Fleet(object):
             if ship.receive_fire(position):
                 return ship
         return None
+
+    def available_ships(self):
+        ship_list = []
+        for ship in self.ships:
+            if ship.is_alive():
+                ship_list.append(colored(ship.name, 'green'))
+            else:
+                ship_list.append(colored(ship.name, 'red'))
+        return ship_list
 
     def is_alive(self) -> bool:
         for ship in self.ships:

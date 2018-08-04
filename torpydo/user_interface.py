@@ -10,7 +10,7 @@ class BaseUI(object):
     def __init__(self, play_field: PlayField):
         self.play_field = play_field
 
-    def draw_board(self, turn_number: int, player):
+    def draw_board(self, turn_number: int, player, ship_list):
         pass
 
     def draw_damage(self, shooter, shot: Point, hit: bool, sunk_ship: Optional[Ship]):
@@ -70,7 +70,7 @@ class AsciiUI(BaseUI):
         print(asciiart.ASCII_DIVIDER)
         print()
 
-    def draw_board(self, turn_number: int, player):
+    def draw_board(self, turn_number: int, player, ship_list):
 
         if player.is_computer():
             print()
@@ -103,6 +103,10 @@ class AsciiUI(BaseUI):
                             char = colored('*', 'red') if oppo else colored('═', 'grey') if ship.position[1] == Orientation.HORIZONTAL else colored('║', 'grey')
                     print(char, end='')
                 print()
+            print()
+            print('****TOTAL SHIPS****')
+            for final_ship in ship_list:
+                print(final_ship)
 
 
     def draw_damage(self, shooter, shot: Point, hit: bool, sunk_ship: Optional[Ship]):

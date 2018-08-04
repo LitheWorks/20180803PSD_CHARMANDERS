@@ -45,6 +45,9 @@ class Player(object):
         sank = ship if hit and not ship.is_alive() else None
         return hit, sank
 
+    def available_ships(self):
+        return self.fleet.available_ships()
+
     def is_computer(self) -> bool:
         return False
 
@@ -115,16 +118,18 @@ class BattleshipGame(object):
             pass
 
     def do_turn(self, turn_number):
-        self.ui.draw_board(turn_number, self.player_1)
+        self.ui.draw_board(turn_number, self.player_1, self.player_2.available_ships())
         player_shot = self.ui.get_player_shot(self.player_1)
         hit, sunk_ship = self.player_2.receive_fire(player_shot)
         self.player_1.record_shot(player_shot, hit)
         self.ui.draw_damage(self.player_1, player_shot, hit, sunk_ship)
+        # print()
+        # ship_list = self.player_2.available_ships()
         if not self.player_2.fleet.is_alive():
             self.ui.draw_victory(turn_number, self.player_1, self.player_2)
             return False
 
-        self.ui.draw_board(turn_number, self.player_2)
+        self.ui.draw_board(turn_number, self.player_2, [])
         computer_shot = self.ui.get_player_shot(self.player_2)
         hit, sunk_ship = self.player_1.receive_fire(computer_shot)
         self.player_2.record_shot(computer_shot, hit)
