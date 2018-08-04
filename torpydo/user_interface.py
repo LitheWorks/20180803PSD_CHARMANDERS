@@ -3,6 +3,7 @@ from typing import Optional
 
 from torpydo import asciiart, TerminationRequested
 from torpydo.ships import PlayField, Point, Ship, Orientation
+from termcolor import colored
 
 
 class BaseUI(object):
@@ -82,17 +83,17 @@ class AsciiUI(BaseUI):
                 for x in range(self.play_field.width):
                     shot = player.get_shot_at(Point(x, y))
                     if shot:
-                        print('*' if shot.hit else '○', end='')
+                        print(colored('*', 'red') if shot.hit else colored('○', 'blue'), end='')
                     else:
                         print('·', end='')
                 print(self.SPACER, self.numbers_column.format(y + 1), sep='', end='')
                 for x in range(self.play_field.width):
                     pos = Point(x, y)
                     oppo = pos in player.opponent_shots
-                    char = '○' if oppo else '·'
+                    char = colored('○', 'blue') if oppo else colored('·', 'blue')
                     for ship in player.fleet:
                         if pos in ship.all_positions:
-                            char = '*' if oppo else '═' if ship.position[1] == Orientation.HORIZONTAL else '║'
+                            char = colored('*', 'red') if oppo else colored('═', 'grey') if ship.position[1] == Orientation.HORIZONTAL else colored('║', 'grey')
                     print(char, end='')
                 print()
 
