@@ -119,7 +119,11 @@ class AsciiUI(BaseUI):
 
     def draw_victory(self, turn_number: int, victor, loser):
         print()
-        print(f"{victor.name}'s mighty fleet vanquished {loser.name} in turn {turn_number}!")
+        if victor.is_computer():
+            print(colored('You Lost!', 'red'))
+            # print(f"{victor.name}'s mighty fleet vanquished {loser.name} in turn {turn_number}!")
+        else:
+            print(colored('You are the winner', 'green'))
 
     def draw_game_stopped(self, player_1, player_2):
         print("The game ended before either fleet was completely defeated.")
