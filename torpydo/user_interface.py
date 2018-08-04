@@ -4,7 +4,7 @@ from typing import Optional
 from torpydo import asciiart, TerminationRequested
 from torpydo.ships import PlayField, Point, Ship, Orientation
 from termcolor import colored
-
+import time
 
 class BaseUI(object):
     def __init__(self, play_field: PlayField):
@@ -71,32 +71,14 @@ class AsciiUI(BaseUI):
         print()
 
     def draw_board(self, turn_number: int, player):
+
         if player.is_computer():
             print()
             print(colored(f"{player.name}, turn #{turn_number}", 'yellow'))
+            time.sleep(1)
+            print(colored(f"{player.name} is thinking...", 'yellow'))
+            time.sleep(1)
             print()
-            cols = string.ascii_uppercase[:self.play_field.width]
-            print(self.numbers_spacer, cols, self.SPACER, self.numbers_spacer, cols, sep='')
-            for y in range(self.play_field.height):
-                print(self.numbers_column.format(y + 1), end='')
-                for x in range(self.play_field.width):
-                    shot = player.get_shot_at(Point(x, y))
-                    if shot:
-                        print(colored('*', 'red') if shot.hit else colored('○', 'blue'), end='')
-                    else:
-                        print('·', end='')
-                print(self.SPACER, self.numbers_column.format(y + 1), sep='', end='')
-                for x in range(self.play_field.width):
-                    pos = Point(x, y)
-                    oppo = pos in player.opponent_shots
-                    char = colored('○', 'blue') if oppo else colored('·', 'blue')
-                    for ship in player.fleet:
-                        if pos in ship.all_positions:
-                            char = colored('*', 'red') if oppo else colored('═', 'grey') if ship.position[
-                                                                                                1] == Orientation.HORIZONTAL else colored(
-                                '║', 'grey')
-                    print(char, end='')
-                print()
         else:
             print()
             print(colored(f"{player.name}, turn #{turn_number}", 'cyan'))
@@ -132,7 +114,6 @@ class AsciiUI(BaseUI):
                 print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!",'yellow'))
             else:
                 print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!", 'cyan'))
-            print()
 
 
 
