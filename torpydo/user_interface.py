@@ -152,11 +152,11 @@ class AsciiUI(BaseUI):
 
         # Otherwise get a shot from user input
         print()
-        print("Player, it's your turn.")
+        print(colored("Player, it's your turn.",'cyan','on_grey'))
         try:
             player_shot = None
             while player_shot is None:
-                input_value = input('Please enter a coordinate between {} and {}, or CTRL-D to quit: '.format(
+                input_value = input(colored('Please enter a coordinate between {} and {} to shoot the missile, or CTRL-D to to quit: ',"blue").format(
                     AsciiUI.point_to_col_row(self.play_field.top_left),
                     AsciiUI.point_to_col_row(self.play_field.bottom_right)))
                 player_shot = self.col_row_to_point(input_value)
