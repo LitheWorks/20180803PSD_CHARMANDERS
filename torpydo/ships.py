@@ -131,6 +131,10 @@ class Fleet(object):
         return None
 
     def is_alive(self) -> bool:
+        for ship in self.ships:
+            if not(ship.is_alive()):
+                print(ship.name)
+
         return any(ship.is_alive() for ship in self.ships)
 
     def random_positioning(self, play_field: PlayField):

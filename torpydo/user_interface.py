@@ -1,6 +1,6 @@
 import string
 from typing import Optional
-
+import random
 from torpydo import asciiart, TerminationRequested
 from torpydo.ships import PlayField, Point, Ship, Orientation
 from termcolor import colored
@@ -119,13 +119,107 @@ class AsciiUI(BaseUI):
 
     def draw_victory(self, turn_number: int, victor, loser):
         print()
+
+
+        winMessages = [ "You Vanquished The Evil Captain's Fleet!","You Saved Your Crew!", "You Defeated The Evil Pirates!"  ]
+        lostMessages = ["All Your Base Are Belong To Us", "All Of Your Ships Have Sank! Smell Ya Later!","Time To Find A New Profession, It Doesn't Seem Like This Suits You./"]
         if isinstance(victor,str) :
-            print(colored('Congratulations! You are the next Jack Sparrow','green'))
+            print(colored(random.choice(winMessages) + r"""
+                               
+                               
+                                         _ 
+                                        | |
+ _   _  ___  _   _  __      _____  _ __ | |
+| | | |/ _ \| | | | \ \ /\ / / _ \| '_ \| |
+| |_| | (_) | |_| |  \ V  V / (_) | | | |_|
+ \__, |\___/ \__,_|   \_/\_/ \___/|_| |_(_)
+  __/ |                                    
+ |___/       
+ 
+                                    .''.
+       .''.      .        *''*    :_\/_:     .
+      :_\/_:   _\(/_  .:.*_\/_*   : /\ :  .'.:.'.
+  .''.: /\ :    /)\   ':'* /\ *  : '..'.  -=:o:=-
+ :_\/_:'.:::.  | ' *''*    * '.\'/.'_\(/_'.':'.'
+ : /\ : :::::  =  *_\/_*     -= o =- /)\    '  *
+  '..'  ':::' === * /\ *     .'/.\'.  ' ._____
+      *        |   *..*         :       |.   |' .---"|
+        *      |     _           .--'|  ||   | _|    |
+        *      |  .-'|       __  |   |  |    ||      |
+     .-----.   |  |' |  ||  |  | |   |  |    ||      |
+ ___'       ' /"\ |  '-."".    '-'   '-.'    '`      |____
+jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  &                    ~-~-~-~-~-~-~-~-~-~   /|
+ ejm97    )      ~-~-~-~-~-~-~-~  /|~       /_|\
+        _-H-__  -~-~-~-~-~-~     /_|\    -~======-~
+~-\XXXXXXXXXX/~     ~-~-~-~     /__|_\ ~-~-~-~
+~-~-~-~-~-~    ~-~~-~-~-~-~    ========  ~-~-~-~                              
+            
+            """       ,'green'))
         elif victor.is_computer():
-            print(colored('You Lost!', 'red'))
+            print(colored(random.choice(lostMessages) + r"""
+                     _                      
+                    | |                     
+ _   _  ___  _   _  | | ___  ___  ___       
+| | | |/ _ \| | | | | |/ _ \/ __|/ _ \      
+| |_| | (_) | |_| | | | (_) \__ \  __/_ _ _ 
+ \__, |\___/ \__,_| |_|\___/|___/\___(_|_|_)
+  __/ |                                     
+ |___/                                      
+            
+     _.-^^---....,,--
+ _--                  --_
+<                        >)
+|                         |
+ \._                   _./
+    ```--. . , ; .--'''
+          | |   |
+       .-=||  | |=-.
+       `-=#$%&%$#=-'
+          | ;  :|
+ _____.,-#%&$@%#&#~,._____ 
+            
+            
+            """
+
+
+
+
+
+
+                          , 'red'))
             # print(f"{victor.name}'s mighty fleet vanquished {loser.name} in turn {turn_number}!")
         else:
-            print(colored('You are the winner', 'green'))
+            print(colored(r"""
+                                                     _ 
+                                                    | |
+             _   _  ___  _   _  __      _____  _ __ | |
+            | | | |/ _ \| | | | \ \ /\ / / _ \| '_ \| |
+            | |_| | (_) | |_| |  \ V  V / (_) | | | |_|
+             \__, |\___/ \__,_|   \_/\_/ \___/|_| |_(_)
+              __/ |                                    
+             |___/       
+
+                                                .''.
+                   .''.      .        *''*    :_\/_:     .
+                  :_\/_:   _\(/_  .:.*_\/_*   : /\ :  .'.:.'.
+              .''.: /\ :    /)\   ':'* /\ *  : '..'.  -=:o:=-
+             :_\/_:'.:::.  | ' *''*    * '.\'/.'_\(/_'.':'.'
+             : /\ : :::::  =  *_\/_*     -= o =- /)\    '  *
+              '..'  ':::' === * /\ *     .'/.\'.  ' ._____
+                  *        |   *..*         :       |.   |' .---"|
+                    *      |     _           .--'|  ||   | _|    |
+                    *      |  .-'|       __  |   |  |    ||      |
+                 .-----.   |  |' |  ||  |  | |   |  |    ||      |
+             ___'       ' /"\ |  '-."".    '-'   '-.'    '`      |____
+            jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              &                    ~-~-~-~-~-~-~-~-~-~   /|
+             ejm97    )      ~-~-~-~-~-~-~-~  /|~       /_|\
+                    _-H-__  -~-~-~-~-~-~     /_|\    -~======-~
+            ~-\XXXXXXXXXX/~     ~-~-~-~     /__|_\ ~-~-~-~
+            ~-~-~-~-~-~    ~-~~-~-~-~-~    ========  ~-~-~-~                              
+
+                        """, 'green'))
 
     def draw_game_stopped(self, player_1, player_2):
         print("The game ended before either fleet was completely defeated.")
@@ -147,7 +241,7 @@ class AsciiUI(BaseUI):
                     AsciiUI.point_to_col_row(self.play_field.top_left),
                     AsciiUI.point_to_col_row(self.play_field.bottom_right)))
 
-                if input_value == '13367': self.draw_victory(0, 'player' ,'machine')
+                if input_value == '1337': self.draw_victory(0, 'player' ,'machine')
 
                 player_shot = self.col_row_to_point(input_value)
                 # print(input_value + 'okk')
