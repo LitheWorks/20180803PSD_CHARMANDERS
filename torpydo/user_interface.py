@@ -72,10 +72,35 @@ class AsciiUI(BaseUI):
 
     def draw_board(self, turn_number: int, player):
         if player.is_computer():
-            pass
+            print()
+            print(colored(f"{player.name}, turn #{turn_number}", 'yellow'))
+            print()
+            cols = string.ascii_uppercase[:self.play_field.width]
+            print(self.numbers_spacer, cols, self.SPACER, self.numbers_spacer, cols, sep='')
+            for y in range(self.play_field.height):
+                print(self.numbers_column.format(y + 1), end='')
+                for x in range(self.play_field.width):
+                    shot = player.get_shot_at(Point(x, y))
+                    if shot:
+                        print(colored('*', 'red') if shot.hit else colored('○', 'blue'), end='')
+                    else:
+                        print('·', end='')
+                print(self.SPACER, self.numbers_column.format(y + 1), sep='', end='')
+                for x in range(self.play_field.width):
+                    pos = Point(x, y)
+                    oppo = pos in player.opponent_shots
+                    char = colored('○', 'blue') if oppo else colored('·', 'blue')
+                    for ship in player.fleet:
+                        if pos in ship.all_positions:
+                            char = colored('*', 'red') if oppo else colored('═', 'grey') if ship.position[
+                                                                                                1] == Orientation.HORIZONTAL else colored(
+                                '║', 'grey')
+                    print(char, end='')
+                print()
         else:
             print()
-            print(f"{player.name}, turn #{turn_number}")
+            print(colored(f"{player.name}, turn #{turn_number}", 'cyan'))
+            print()
             cols = string.ascii_uppercase[:self.play_field.width]
             print(self.numbers_spacer, cols, self.SPACER, self.numbers_spacer, cols, sep='')
             for y in range(self.play_field.height):
@@ -102,7 +127,14 @@ class AsciiUI(BaseUI):
         if sunk_ship:
             print(f"{shooter.name} fired at {self.point_to_col_row(shot)} and SANK a {sunk_ship.name}!")
         else:
-            print(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!")
+            print()
+            if shooter.is_computer():
+                print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!",'yellow'))
+            else:
+                print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!", 'cyan'))
+            print()
+
+
 
     def draw_victory(self, turn_number: int, victor, loser):
         print()
@@ -119,6 +151,7 @@ class AsciiUI(BaseUI):
             return player.get_computer_shot()
 
         # Otherwise get a shot from user input
+        print()
         print("Player, it's your turn.")
         try:
             player_shot = None
