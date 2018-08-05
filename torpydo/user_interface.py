@@ -115,9 +115,12 @@ class AsciiUI(BaseUI):
         else:
             print()
             if shooter.is_computer():
+                new_response = f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!"
                 print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!",'yellow'))
             else:
+                new_response = f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!"
                 print(colored(f"{shooter.name} fired at {self.point_to_col_row(shot)} and {'hit' if hit else 'missed'}!", 'cyan'))
+            return new_response
 
 
 
