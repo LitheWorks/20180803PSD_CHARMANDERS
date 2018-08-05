@@ -104,7 +104,7 @@ class AsciiUI(BaseUI):
                     print(char, end='')
                 print()
             print()
-            print('****TOTAL SHIPS****')
+            print('****ENEMY SHIPS****')
             for final_ship in ship_list:
                 print(final_ship)
 
@@ -194,7 +194,7 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                           , 'red'))
             # print(f"{victor.name}'s mighty fleet vanquished {loser.name} in turn {turn_number}!")
         else:
-            print(colored(r"""
+            print(colored(random.choice(winMessages) + r"""
                                                      _ 
                                                     | |
              _   _  ___  _   _  __      _____  _ __ | |
@@ -237,7 +237,7 @@ jgs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         # Otherwise get a shot from user input
         print()
-        print(colored("Player, it's your turn.",'cyan','on_grey'))
+        print(colored("Player, it's your turn.",'cyan'))
         try:
             player_shot = None
             while player_shot is None:

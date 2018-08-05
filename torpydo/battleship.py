@@ -123,8 +123,6 @@ class BattleshipGame(object):
         hit, sunk_ship = self.player_2.receive_fire(player_shot)
         self.player_1.record_shot(player_shot, hit)
         self.ui.draw_damage(self.player_1, player_shot, hit, sunk_ship)
-        # print()
-        # ship_list = self.player_2.available_ships()
         if not self.player_2.fleet.is_alive():
             self.ui.draw_victory(turn_number, self.player_1, self.player_2)
             return False
